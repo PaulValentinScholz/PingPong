@@ -40,7 +40,7 @@ class Ball:
 
         # Check collision with window boundaries
         if self.x < self.radius or self.x > self.window.get_width() - self.radius:
-            self.dx = -self.dx * 1.02
+            self.dx = -self.dx * 1.05
             paddle.color = (211, 219, 43)
             self.paddle_hit = False
 
@@ -49,7 +49,7 @@ class Ball:
             self.paddle_hit = False
 
         if self.y < self.radius:
-            self.dy = -self.dy * 1.02
+            self.dy = -self.dy * 1.05
             paddle.color = (211, 219, 43)
             self.paddle_hit = False
 
@@ -64,12 +64,13 @@ class Ball:
                 normalized_offset = hit_offset / (
                         paddle.width / 2)  # Normalize the offset to a value between -1 and 1
                 angle = normalized_offset * (math.pi / 4)  # Scale the offset to an angle between -45 and 45 degrees
-                original_speed = math.sqrt(self.dx ** 2 + self.dy ** 2)*1.02  # Calculate the original speed of the ball
+                original_speed = math.sqrt(
+                    self.dx ** 2 + self.dy ** 2)  # Calculate the original speed of the ball
                 self.dx = original_speed * math.sin(angle)  # Adjust the x-component of velocity based on the angle
                 self.dy = -original_speed * math.cos(angle)  # Adjust the y-component of velocity based on the angle
+                if paddle.speed <= 4:
+                    paddle.speed *= 1.05
                 self.points += 1
-
-
 
     def ball_object_collided(self, object):
         if self.x + self.radius >= object.x and self.x - self.radius <= object.x + object.width:

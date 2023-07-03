@@ -6,6 +6,7 @@ from ball import Ball
 from damagefield import DamageField
 from textfield import TextField
 
+
 class Game:
     def __init__(self, window):
         self.window = window
@@ -23,11 +24,10 @@ class Game:
         self.textfield_points = TextField("Punktzahl: " + str(self.ball.points), 46, (105, 131, 161), 950, 50)
         self.textfield_highscore = TextField("Highscore: " + str(self.highscore), 46, (105, 131, 161), 500, 50)
         self.textfield_attempts = TextField("Versuche: " + str(self.ball.attempts), 46, (105, 131, 161), 50, 50)
-        self.textfield_paddle_slow = TextField("[Pfeil-runter] - Langsam", 32, (211, 219, 43), 50, 75)
-        self.textfield_paddle_fast = TextField("[Pfeil-hoch] - Schnell", 32, (211, 219, 43), 50, 50)
         self.textfield_start = TextField("Drücke [Leertaste] um das Spiel zu starten!", 60, (105, 131, 161), 170, 200)
         self.textfield_lose = TextField("Du hast verloren!" + str(self.ball.attempts), 60, (105, 131, 161), 425, 350)
-        self.textfield_rastart = TextField("Drücke [Leertaste] um das Spiel neu zu starten!", 60, (105, 131, 161), 160, 450)
+        self.textfield_restart = TextField("Drücke [Leertaste] um das Spiel neu zu starten!", 60, (105, 131, 161), 160,
+                                           450)
 
     def restart_game(self):
         self.ball.reset()
@@ -49,8 +49,9 @@ class Game:
             print("SPACE")
             self.home = False
             self.game = True
+
     def start_game(self):
-    #    self.restart_game()
+        #    self.restart_game()
         self.paddle.update()
         self.ball.update(self.paddle)
         self.textfield_points.update("Punktzahl: " + str(self.ball.points))
@@ -68,13 +69,13 @@ class Game:
             self.game = False
             self.game_ende = True
 
-
     def end_game(self, keys):
         self.textfield_lose.update("Du hast verloren!")
-        self.textfield_rastart.update("Drücke Leertaste um das Spiel neu zu starten!")
+        self.textfield_restart.update("Drücke Leertaste um das Spiel neu zu starten!")
         if keys[pygame.K_SPACE]:
             self.game_ende = False
             self.home = True
+
     def render(self):
         # Clear the window
         if self.home:
@@ -83,8 +84,6 @@ class Game:
             self.paddle.render()
             self.ball.render()
             self.damagefield.render()
-            self.textfield_paddle_slow.render(self.window)
-            self.textfield_paddle_fast.render(self.window)
             pygame.display.flip()
 
         if self.game:
@@ -98,8 +97,6 @@ class Game:
 
         if self.game_ende:
             self.textfield_lose.render(self.window)
-            self.textfield_rastart.render(self.window)
-            self.textfield_paddle_slow.render(self.window)
-            self.textfield_paddle_fast.render(self.window)
+            self.textfield_restart.render(self.window)
             self.textfield_highscore.render(self.window)
             pygame.display.flip()

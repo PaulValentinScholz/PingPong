@@ -23,15 +23,8 @@ class Paddle:
             self.x -= self.speed
         if keys[pygame.K_RIGHT]:
             self.x += self.speed
-        if keys[pygame.K_UP]:           # Hier ganz einfach die Tastenblegung für Paddle schneller ändern
-            self.speed = 4
-            self.window.fill((255, 249, 249))
-        elif keys[pygame.K_DOWN]:       # Hier ganz einfach die Tastenblegung für Paddle langsamer ändern
-            self.speed = 1
-            self.window.fill((249, 249, 255))
-        else:
-            self.speed = 2
-            self.window.fill((255, 255, 255))
+
+        self.window.fill((255, 255, 255))
 
         # Ensure paddle stays within window boundaries
         if self.x < 0:
